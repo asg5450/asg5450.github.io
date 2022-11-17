@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      .container {
+        width: 600px;
+        height: 800px;
+        margin: 200px;
+        overflow-y: scroll;
+        background-color: deepskyblue;
+      }
+
+      .box {
+        width: 300px;
+        height: 300px;
+        margin: 80px auto;
+        background-color: beige;
+        transition: 350ms;
+      }
+
+      .box.active {
+        background-color: gold;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>intersection observer</h2>
+    <div class="container">
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+    </div>
+    <script>
+      const boxes = document.querySelectorAll(".box");
+
+      const options = {
+        root: null, //null이 기본값, viewport기준으로 변화를 감지하라 (화면에 등장을 감지!)
+        rootMargin: "100px", //해당 영역 밖으로 100px의 마진영역부터 미리 변화를 인식시키는 것 (화면 밖 해당 마진에서 부터 효과 적용!)
+        threshold: 0.2, //1이 최댓값, 효과 적용시점을 엔트리의 노출비율로 정하는 것
+      };
+
+      const callback = (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+          } else {
+            entry.target.classList.remove("active");
+          }
+        });
+      };
+
+      const observer = new IntersectionObserver(callback, options);
+      boxes.forEach((box) => observer.observe(box));
+    </script>
+  </body>
+</html>
